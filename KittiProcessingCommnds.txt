@@ -1,0 +1,4 @@
+convert **.png  -resize 640x480^ resize.png
+
+convert resize.png -crop 640x480+640+0 +repage crRight.png
+convert resize.png -crop 640x480+0+0 +repage crLeft.png

@@ -1,12 +1,32 @@
 ''' Builds a keras model for the supervised version of 
 Semi-supervised Deep Learning for Monocular Depth Map Prediction'''
 
+from keras import backend as K
 from keras.models import Model
 from keras.layers import Input
 from keras.optimizers import Adam
 from modelBlocks import type1Resblock, type2Resblock, upProjectFast, concatPad
 from loss import compositeLoss
 from keras.layers import Conv2D, BatchNormalization, MaxPooling2D, Activation, Lambda, Dropout
+import numpy as np
+
+def lossFn(y_true,y_pred):
+    #y_true is a (4,) tensor
+    yTrue = K.tf.reshape(y_true, [-1])
+    yPred = K.tf.reshape(y_pred, [-1])
+    
+    #Ignore pixels where depth info is not present or is inaccurate
+    nonZero = (yTrue > 0)
+    inRange = yTrue < 8000
+    valids = K.tf.logical_and(nonZero, inRange)
+    
+    error = yPred - yTrue
+    error = K.tf.boolean_mask(error, valids)
+
+    #Using the L2 Norm
+    norm = K.sum((K.abs(error))**2)
+    norm = K.sqrt(norm)
+    return norm
 
 def buildModel():
     # ==========  Define model  ==========
@@ -58,21 +78,31 @@ def buildModel():
     #Final convolution
     DEPTH = Conv2D(filters=1, kernel_size=(3,3), strides=(1,1), padding='same', data_format='channels_last', use_bias=False)(drop1)
     
-    #Loss Calculation
-    labels = Input(name='lossLabels', shape=(640,480,3,))
+    
+
+#    #ToDo Change loss to use the smoothness component as well
+#    #Loss Calculation
+#    LABELS = Input(name='lossLabels', shape=(640,480,3,))
+#    
+#    #To allow the smoothness loss we use a lambda function as in
+#    # https://github.com/keras-team/keras/blob/master/examples/image_ocr.py
+#    LOSS = Lambda(compositeLoss, name='lossLambda')([DEPTH, LABELS, RGB])
+#    model.compile(optimizer, loss={'lossLambda': lambda y_true, y_pred: y_pred})
     
     
-    #To allow the smoothness loss we use a lambda function as in
-    # https://github.com/keras-team/keras/blob/master/examples/image_ocr.py
-    LOSS = Lambda(compositeLoss, name='lossLambda')([DEPTH, labels, RGB])
-    
-    
-    model = Model(inputs=RGB, outputs=LOSS)
+    #Compile the full model
+    model = Model(inputs=RGB, outputs=DEPTH)
     optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
-    model.compile(optimizer, loss={'lossLambda': lambda y_true, y_pred: y_pred})
-    model.summary()
+    model.compile(optimizer, loss=lossFn)
+#    model.summary()
     
     return model
-
+    
 if __name__ == "__main__":
     model = buildModel()
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,2 @@
+mkdir resized
+mogrify -resize 640x480^ -path resized/ *.png

@@ -1,0 +1,9 @@
+mkdir cropped
+
+for PHOTO in resized/*.png
+   do
+       BASE=`basename $PHOTO`
+	convert "$PHOTO" -crop 640x480+0+0 +repage cropped/Left"$BASE"
+	convert "$PHOTO" -crop 640x480+640+0 +repage cropped/Right"$BASE"
+   done
+   

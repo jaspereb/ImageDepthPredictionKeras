@@ -1,0 +1,7 @@
+mkdir depth
+mkdir masks
+mkdir images
+
+mv *depth.png depth/
+mv *mask.png masks/
+mv *.png images/
