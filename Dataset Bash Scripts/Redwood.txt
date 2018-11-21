@@ -1,0 +1,5 @@
+Use the python script to download everything (it's massive)
+
+To unzip:
+for i in *.zip; do unzip "$i" -d "${i%%.zip}"; done
+

@@ -1,0 +1,15 @@
+run the following from the top folder of the YCB dataset, this will remove all the unwanted .h5 files
+
+To check which files you will delete:
+find . -name "*pose.h5" -type f
+
+To delete them:
+find . -name "*pose.h5" -type f -delete
+
+To delete the extras:
+find . -name "calibration.h5" -type f -delete
+find . -name "turntable.h5" -type f -delete
+
+
+To crop the JPEG images
+convert NP1_3.jpg -crop 640x480+320+272 NP1_3C.jpg
