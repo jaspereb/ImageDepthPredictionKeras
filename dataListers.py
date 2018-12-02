@@ -251,7 +251,7 @@ if __name__ == "__main__":
 #    ycbDir = "/media/jasper/107480BB7480A4D6/Users/Jasper/Datasets/YCB"
 #    part, labels = buildYCBList(ycbDir)
     
-    redwoodDir = "/media/jasper/107480BB7480A4D6/Users/Jasper/Datasets/Redwood"
+    redwoodDir = "/mnt/0FEF1F423FF4C54B/Datasets/Redwood"
     part, labels = buildRedwoodList(redwoodDir)
     
 #    kittiGen = KittiDataGenerator(part['train'], labels)

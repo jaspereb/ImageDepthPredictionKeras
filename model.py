@@ -9,6 +9,7 @@ from modelBlocks import type1Resblock, type2Resblock, upProjectFast, concatPad
 from loss import compositeLoss
 from keras.layers import Conv2D, BatchNormalization, MaxPooling2D, Activation, Lambda, Dropout
 import numpy as np
+import tensorflow as tf
 
 def lossFn(y_true,y_pred):
     #y_true is a (4,) tensor
