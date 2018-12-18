@@ -1,0 +1,16 @@
+Loss for consecutive images is ~40,000 after square rooting. Altered the loss function to remove the sqrt part because of issues with this. 40k squared is 1559368578 = 1.6 billion
+
+Model training runs and losses:
+3/12/18 - Trained overnight on small redwood. Final val loss 7.6e10 = 76 billion. Previous best model (trained longer on small redwood) had loss of ~60billion
+
+Concerned that the model will never achieve good performance on redwood because it is too varied. May be worth training on kitti to rule out significant model structure errors. The kitti problem is significantly easier because of the presence of a road in all images. This provides a projective plane for the image.
+
+Could also try training on the full dataset to plateau and see what minimum loss is observed. 
+
+Transferring weights from an existing network would be ideal. But the unique structure and resolution input make this unlikely. 
+
+Currently thinking that we should add tof style inputs to the network and examine the impact on accuracy. So we will train a net on the small redwood dataset, with a steps size of 650k for 10 epochs. 
+
+Using a partition split of 0.005 for validation results in 3300 val images. 
+
+Using a 0.002 split for now.

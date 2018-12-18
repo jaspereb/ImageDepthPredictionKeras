@@ -1,8 +1,8 @@
-from model import buildModel, lossFn
+from model import buildModelBaseline, lossFn
 import tensorflow as tf
 from keras import backend as K
 from keras import models
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, TensorBoard
 #from dataGenerators import buildKittiList, KittiDataGenerator, testGenerator
 #from dataGenerators import buildYCBList, YCBDataGenerator, testGenerator
 from dataListers import buildRedwoodList
@@ -13,40 +13,48 @@ from time import gmtime, strftime
 import sys
 
 CPUMODE = False
+LOADDATASET = True
+
+batch_size = 2
 if(CPUMODE):
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
     
-#Build Redwood dataset
-#print("Building dataset")
-#redwoodDir = "/mnt/0FEF1F423FF4C54B/Datasets/Redwood"
-#part, labels = buildRedwoodList(redwoodDir)
-#
-#with open('./part', 'wb') as file:
-#        pickle.dump(part, file)
-#
-#with open('./labels', 'wb') as file:
-#        pickle.dump(labels, file)
 
-print("Loading dataset")
-with open('./part', 'rb') as file:
-        part = pickle.load(file)
+if(LOADDATASET):
+    print("Loading dataset")
+    with open('./part', 'rb') as file:
+            part = pickle.load(file)
+    
+    with open('./labels', 'rb') as file:
+            labels = pickle.load(file)
+else:
+    #Build Redwood dataset
+    print("Building dataset")
+    redwoodDir = "/mnt/0FEF1F423FF4C54B/Datasets/Redwood"
+    part, labels = buildRedwoodList(redwoodDir, 0.998)
+    
+    with open('./part', 'wb') as file:
+            pickle.dump(part, file)
+    
+    with open('./labels', 'wb') as file:
+            pickle.dump(labels, file)
 
-with open('./labels', 'rb') as file:
-        labels = pickle.load(file)
+RedGen = RedwoodDataGenerator(part['train'], labels, batch_size=batch_size)
+RedGenVal = RedwoodDataGenerator(part['validation'], labels, batch_size=batch_size)
 
-RedGen = RedwoodDataGenerator(part['train'], labels)
-RedGenVal = RedwoodDataGenerator(part['validation'], labels)
+print("Building model...")
+model = buildModelBaseline()
 
-#print("Building model...")
-#model = buildModel()
+#print("Loading model...")
+#model = models.load_model('/mnt/0FEF1F423FF4C54B/TrainedModels/weights.05-81862692952.85.hdf5', 
+#                          custom_objects={'tf':tf, 'lossFn':lossFn})
 
-print("Loading model...")
-model = models.load_model('/home/jasper/git/ImageDepthPredictionKeras/weights.02-246543.44.hdf5', 
-                          custom_objects={'tf':tf, 'lossFn':lossFn})
+checkpointer = ModelCheckpoint(filepath='/mnt/0FEF1F423FF4C54B/TrainedModels/weights.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=False)
 
-checkpointer = ModelCheckpoint(filepath='weights.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=False)
+boarder = TensorBoard(log_dir='./logs')
+
 
 #Print model summary to file
 with open('model_summary.txt','w') as fh:
@@ -54,7 +62,11 @@ with open('model_summary.txt','w') as fh:
     model.summary(print_fn=lambda x: fh.write(x + '\n'))
 
 #Fit model
-history = model.fit_generator(RedGen, epochs=10, validation_data=RedGenVal, use_multiprocessing=True, callbacks=[checkpointer])
+steps = (len(part['train'])/batch_size)
+steps = 5000
+
+history = model.fit_generator(RedGen, epochs=50, steps_per_epoch=steps, validation_data=RedGenVal, 
+                              use_multiprocessing=True, callbacks=[checkpointer, boarder])
 
 with open('./trainingHistory', 'wb') as hist:
         pickle.dump(history.history, hist)

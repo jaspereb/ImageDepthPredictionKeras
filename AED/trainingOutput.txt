@@ -1,0 +1,189 @@
+Python 2.7.15rc1 (default, Nov 12 2018, 14:31:15)
+Type "copyright", "credits" or "license" for more information.
+
+IPython 5.8.0 -- An enhanced Interactive Python.
+?         -> Introduction and overview of IPython's features.
+%quickref -> Quick reference.
+help      -> Python's own help system.
+object?   -> Details about 'object', use 'object??' for extra details.
+
+In [1]: runfile('/home/jasper/git/ImageDepthPredictionKeras/AED/trainAED.py', wdir='/home/jasper/git/ImageDepthPredictionKeras/AED')
+Using TensorFlow backend.
+2018-12-06 10:57:29.615360
+Loading dataset
+Building model...
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         (None, 640, 480, 3)       0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 640, 480, 32)      896       
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 320, 240, 32)      0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 320, 240, 16)      4624      
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 160, 120, 16)      0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 160, 120, 16)      2320      
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 80, 60, 16)        0         
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 80, 60, 8)         1160      
+_________________________________________________________________
+max_pooling2d_4 (MaxPooling2 (None, 40, 30, 8)         0         
+_________________________________________________________________
+conv2d_5 (Conv2D)            (None, 40, 30, 8)         584       
+_________________________________________________________________
+max_pooling2d_5 (MaxPooling2 (None, 20, 15, 8)         0         
+_________________________________________________________________
+conv2d_6 (Conv2D)            (None, 20, 15, 8)         584       
+_________________________________________________________________
+up_sampling2d_1 (UpSampling2 (None, 40, 30, 8)         0         
+_________________________________________________________________
+conv2d_7 (Conv2D)            (None, 40, 30, 8)         584       
+_________________________________________________________________
+up_sampling2d_2 (UpSampling2 (None, 80, 60, 8)         0         
+_________________________________________________________________
+conv2d_8 (Conv2D)            (None, 80, 60, 16)        1168      
+_________________________________________________________________
+up_sampling2d_3 (UpSampling2 (None, 160, 120, 16)      0         
+_________________________________________________________________
+conv2d_9 (Conv2D)            (None, 160, 120, 16)      2320      
+_________________________________________________________________
+up_sampling2d_4 (UpSampling2 (None, 320, 240, 16)      0         
+_________________________________________________________________
+conv2d_10 (Conv2D)           (None, 320, 240, 32)      4640      
+_________________________________________________________________
+up_sampling2d_5 (UpSampling2 (None, 640, 480, 32)      0         
+_________________________________________________________________
+AEDOutput (Conv2D)           (None, 640, 480, 1)       289       
+=================================================================
+Total params: 19,169
+Trainable params: 19,169
+Non-trainable params: 0
+_________________________________________________________________
+/home/jasper/.local/lib/python2.7/site-packages/tensorflow/python/ops/gradients_impl.py:112: UserWarning: Converting sparse IndexedSlices to a dense Tensor of unknown shape. This may consume a large amount of memory.
+  "Converting sparse IndexedSlices to a dense Tensor of unknown shape. "
+Epoch 1/50
+200/200 [==============================] - 68s 339ms/step - loss: 1038439674019.8400 - val_loss: 651356523541.6556
+
+Epoch 00001: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.01-651356523541.66.hdf5
+Epoch 2/50
+200/200 [==============================] - 66s 330ms/step - loss: 644532478853.1200 - val_loss: 620847771239.6375
+
+Epoch 00002: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.02-620847771239.64.hdf5
+Epoch 3/50
+200/200 [==============================] - 64s 319ms/step - loss: 641721498173.4399 - val_loss: 686338423433.6677
+
+Epoch 00003: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.03-686338423433.67.hdf5
+Epoch 4/50
+200/200 [==============================] - 65s 323ms/step - loss: 599676483584.0000 - val_loss: 1245749198501.5105
+
+Epoch 00004: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.04-1245749198501.51.hdf5
+Epoch 5/50
+200/200 [==============================] - 65s 323ms/step - loss: 630448270008.3199 - val_loss: 687733401296.8218
+
+Epoch 00005: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.05-687733401296.82.hdf5
+Epoch 6/50
+142/200 [====================>.........] - ETA: 9s - loss: 587454914011.9436 Skipping bad image at /mnt/0FEF1F423FF4C54B/Datasets/Redwood/05919/rgb/0001401-000046922400.jpg
+200/200 [==============================] - 64s 320ms/step - loss: 586880928399.3600 - val_loss: 708256528551.0574
+
+Epoch 00006: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.06-708256528551.06.hdf5
+Epoch 7/50
+200/200 [==============================] - 64s 318ms/step - loss: 567571117404.1600 - val_loss: 741739150357.6556
+
+Epoch 00007: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.07-741739150357.66.hdf5
+Epoch 8/50
+200/200 [==============================] - 64s 322ms/step - loss: 596105101721.6000 - val_loss: 585198099688.0242
+
+Epoch 00008: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.08-585198099688.02.hdf5
+Epoch 9/50
+200/200 [==============================] - 64s 322ms/step - loss: 628268647628.7999 - val_loss: 569593416379.1661
+
+Epoch 00009: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.09-569593416379.17.hdf5
+Epoch 10/50
+200/200 [==============================] - 64s 318ms/step - loss: 557609665064.9600 - val_loss: 630544967908.9305
+
+Epoch 00010: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.10-630544967908.93.hdf5
+Epoch 11/50
+200/200 [==============================] - 66s 332ms/step - loss: 555179347353.6000 - val_loss: 561663005377.3535
+
+Epoch 00011: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.11-561663005377.35.hdf5
+Epoch 12/50
+200/200 [==============================] - 65s 327ms/step - loss: 560921915473.9200 - val_loss: 582114754683.7462
+
+Epoch 00012: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.12-582114754683.75.hdf5
+
+Epoch 00011: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.11-561663005377.35.hdf5
+Epoch 13/50
+200/200 [==============================] - 65s 325ms/step - loss: 572818367447.0400 - val_loss: 594678343908.9305
+
+Epoch 00013: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.13-594678343908.93.hdf5
+Epoch 14/50
+200/200 [==============================] - 66s 330ms/step - loss: 596745757040.6400 - val_loss: 564654234064.0483
+
+Epoch 00014: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.14-564654234064.05.hdf5
+Epoch 15/50
+200/200 [==============================] - 64s 322ms/step - loss: 578667128135.6801 - val_loss: 566475196793.4260
+
+Epoch 00015: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.15-566475196793.43.hdf5
+Epoch 16/50
+200/200 [==============================] - 66s 331ms/step - loss: 555092653301.7600 - val_loss: 558778478728.1208
+
+Epoch 00016: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.16-558778478728.12.hdf5
+Epoch 17/50
+200/200 [==============================] - 64s 319ms/step - loss: 600797252567.0400 - val_loss: 556910778262.8157
+
+Epoch 00017: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.17-556910778262.82.hdf5
+Epoch 18/50
+176/200 [=========================>....] - ETA: 4s - loss: 550744011310.5454Skipping bad image at /mnt/0FEF1F423FF4C54B/Datasets/Redwood/05919/rgb/0002601-000087141600.jpg
+200/200 [==============================] - 66s 329ms/step - loss: 548956300738.5600 - val_loss: 571747008215.0090
+
+Epoch 00018: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.18-571747008215.01.hdf5
+Epoch 19/50
+200/200 [==============================] - 63s 317ms/step - loss: 582883611934.7200 - val_loss: 601460394373.8007
+
+Epoch 00019: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.19-601460394373.80.hdf5
+Epoch 20/50
+200/200 [==============================] - 65s 324ms/step - loss: 584849315430.4000 - val_loss: 564079896483.1903
+
+Epoch 00020: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.20-564079896483.19.hdf5
+Epoch 21/50
+200/200 [==============================] - 64s 321ms/step - loss: 569067866030.0800 - val_loss: 577155419244.2780
+
+Epoch 00021: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.21-577155419244.28.hdf5
+Epoch 22/50
+200/200 [==============================] - 63s 316ms/step - loss: 562907260846.0800 - val_loss: 574127723349.8490
+
+Epoch 00022: saving model to /mnt/0FEF1F423FF4C54B/TrainedModels/CAE/weights.22-574127723349.85.hdf5
+Epoch 23/50
+194/200 [============================>.] - ETA: 0s - loss: 581367303284.1237 Process PoolWorker-24:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/multiprocessing/process.py", line 267, in _bootstrap
+    self.run()
+  File "/usr/lib/python2.7/multiprocessing/process.py", line 114, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python2.7/multiprocessing/pool.py", line 102, in worker
+    task = get()
+  File "/usr/lib/python2.7/multiprocessing/queues.py", line 376, in get
+    return recv()
+KeyboardInterrupt
+Process PoolWorker-2:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/multiprocessing/process.py", line 267, in _bootstrap
+    self.run()
+  File "/usr/lib/python2.7/multiprocessing/process.py", line 114, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python2.7/multiprocessing/pool.py", line 113, in worker
+    result = (True, func(*args, **kwds))
+  File "/home/jasper/.local/lib/python2.7/site-packages/keras/utils/data_utils.py", line 401, in get_index
+    return _SHARED_SEQUENCES[uid][i]
+  File "dataGeneratorsAED.py", line 37, in __getitem__
+    X, y = self.__data_generation(list_IDs_temp)
+  File "dataGeneratorsAED.py", line 56, in __data_generation
+    I = Image.open(ID)
+  File "/home/jasper/.local/lib/python2.7/site-packages/PIL/Image.py", line 2609, in open
+    fp = builtins.open(filename, "rb")
+KeyboardInterrupt
+

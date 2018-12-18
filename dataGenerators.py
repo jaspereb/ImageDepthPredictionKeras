@@ -52,6 +52,7 @@ class RedwoodDataGenerator(keras.utils.Sequence):
         
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
+            
             # Store sample
             X[i,] = np.swapaxes(np.array(Image.open(ID)),0,1)
             
